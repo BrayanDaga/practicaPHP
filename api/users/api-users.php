@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
@@ -42,13 +42,27 @@ if(isset($_GET['accion'])){
 				echo json_encode([$resultado]);
 			break;
 		
+			case 'loguear':
+				$resultado = $users->getByNameAndPass(
+					[
+						'email'                          => $_GET["email"],
+						'password'                       => $_GET["password"],
+					]
+					);
+
+					if($resultado>0){
+						$_SESSION['user'] = $resultado;
+					}
+				echo json_encode([$resultado]);
+			break;
+		
 			case 'modificar':
 				$respuesta = $users->update(
-					[
-				'id' 			                     => $_GET["id"],
-					'name' 			                    => $_POST["name"],
-					'email'               => $_POST["email"],
-					'password'               => $_POST["password"],
+				[
+					'id'                             => $_GET["id"],
+					'name'                           => $_POST["name"],
+					'email'                          => $_POST["email"],
+					'password'                       => $_POST["password"],
 					]
 				);
 				echo json_encode($respuesta);

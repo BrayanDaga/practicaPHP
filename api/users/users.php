@@ -16,7 +16,6 @@ class Users extends DB{
                 'id'                => $row['id'],
                 'name'              => $row['name'],
                 'email'             => $row['email'],
-                'password'          => $row['password']
             ];
             array_push($items,$item);
         }
@@ -54,6 +53,23 @@ class Users extends DB{
     public function getById($id){
         $query = $this->connect()->prepare('SELECT * FROM users WHERE id= :id');
         $query->execute(['id'   =>$id]);
+
+        $row=$query->fetch();
+        return [
+            'id'                    => $row['id'],
+            'name'                  => $row['name'],
+            'email'                 => $row['email'],
+            'password'              => $row['password']
+        ];
+    }
+
+
+    public function getByNameAndPass($item){
+        $query = $this->connect()->prepare('SELECT * FROM users WHERE email= :email AND password= :password');
+        $query->execute([
+            'email'   => $item['email'],
+            'password'   => $item['password'],
+        ]);
 
         $row=$query->fetch();
         return [

@@ -48,7 +48,6 @@ $('#BotonAgregar').click(function() {
 $('#ConfirmarAgregar').click(function() {
   $("#FormularioUser").modal('hide');
   let registro = recuperarDatosFormulario();
-  console.log(registro);
   agregarRegistro(registro);
 });
 
